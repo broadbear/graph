@@ -13,7 +13,7 @@ public class SequentialGraph {
 		distance = new Integer[graph.size()];
 	}
 	
-	void mooresShortestPath(int s) {
+	Integer[] mooresShortestPath(int s) {
 		distance[s] = 0;
 		for (int i = 0; i < graph.size(); i++) {
 			if (i != s) {
@@ -24,7 +24,7 @@ public class SequentialGraph {
 		while (queue.size() != 0) {
 			search();
 		}
-		
+		return distance;		
 	}
 	
 	void search() {
