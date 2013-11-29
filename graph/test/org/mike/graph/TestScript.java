@@ -9,11 +9,24 @@ public class TestScript {
 	public static void main(String[] args) {
 //		Graph graph = createGraph();
 		Graph graph = createGraph("input/mediumG.txt");
-//		SequentialGraph g = new SequentialGraph(graph);
-		ParallelGraph g = new ParallelGraph(graph, 1);
-		Integer[] distance = g.mooresShortestPath(0);
-		for (int i = 0; i < distance.length; i++) {
-			System.out.println("["+i+"] "+distance[i]);
+		long start = System.currentTimeMillis();
+		SequentialGraph seqG = new SequentialGraph(graph);
+		Integer[] distance = seqG.mooresShortestPath(0);
+		long end = System.currentTimeMillis();
+		System.out.println(end - start);
+//		print(distance);
+
+		start = System.currentTimeMillis();
+		ParallelGraph parG = new ParallelGraph(graph, 4);
+		distance = parG.mooresShortestPath(0);
+		end = System.currentTimeMillis();
+		System.out.println(end - start);
+//		print(distance);
+	}
+	
+	static void print(Integer[] d) {
+		for (int i = 0; i < d.length; i++) {
+			System.out.println("["+i+"] "+d[i]);
 		}
 	}
 
