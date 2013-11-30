@@ -1,5 +1,6 @@
 package org.mike.graph;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdjacencyMatrix implements Graph {
@@ -11,8 +12,7 @@ public class AdjacencyMatrix implements Graph {
 	
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return matrix.length;
 	}
 
 	@Override
@@ -22,31 +22,34 @@ public class AdjacencyMatrix implements Graph {
 
 	@Override
 	public void removeEdge(int i, int j) {
-		// TODO Auto-generated method stub
-		
+		matrix[i][j] = 0;
 	}
 
 	@Override
 	public boolean hasEdge(int i, int j) {
-		// TODO Auto-generated method stub
-		return false;
+		return matrix[i][j] > 0;
 	}
 
 	@Override
 	public List<Integer> outEdges(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Integer> edges = new ArrayList<Integer>();
+		for (int j = 0; j < matrix.length; j++) {
+			if (matrix[i][j] > 0) {
+				edges.add(j);
+			}
+		}
+		return edges;
 	}
 
 	@Override
 	public List<Integer> inEdges(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Integer> edges = new ArrayList<Integer>();
+		// TODO: tbd
+		return edges;
 	}
 
 	@Override
 	public int getWeight(int i, int j) {
-		// TODO Auto-generated method stub
-		return 0;
+		return matrix[i][j];
 	}
 }
