@@ -7,35 +7,35 @@ import java.io.FileReader;
 public class TestScript {
 
 	public static void main(String[] args) {
-		Graph graph = createGraph();
-//		Graph graph = createGraph("input/mediumG.txt");
+//		Graph graph = createGraph();
+		Graph graph = createGraph("input/mediumG.txt");
 		long start = System.currentTimeMillis();
 		SequentialGraph seqG = new SequentialGraph(graph);
 		Integer[] distance = seqG.mooresShortestPath(0);
 		long end = System.currentTimeMillis();
 		System.out.println(end - start);
-		print(distance);
+//		print(distance);
 
 		start = System.currentTimeMillis();
 		ParallelGraph parG = new ParallelGraph(graph, 4);
 		distance = parG.mooresShortestPath(0);
 		end = System.currentTimeMillis();
 		System.out.println(end - start);
-		print(distance);
+//		print(distance);
 		
 		start = System.currentTimeMillis();
 		SequentialGraph dfs = new SequentialGraph(graph);
 		distance = dfs.bfs(0);
 		end = System.currentTimeMillis();
 		System.out.println(end - start);
-		print(distance);
+//		print(distance);
 		
 		start = System.currentTimeMillis();
 		SequentialGraph bfs = new SequentialGraph(graph);
 		distance = bfs.bfs(0);
 		end = System.currentTimeMillis();
 		System.out.println(end - start);
-		print(distance);		
+//		print(distance);		
 	}
 	
 	static void print(Integer[] d) {
