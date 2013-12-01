@@ -103,15 +103,16 @@ public class SequentialGraph {
 	}
 	
 	Integer[] dijkstrasShortestPath(int s) {
+		Set<Integer> pQueue = new HashSet<Integer>();
 		for (int u = 0; u < graph.size(); u++) {
 			distance[u] = Integer.MAX_VALUE;
 			color[u] = Color.WHITE;
 			pi[u] = 0;
 		}
 		distance[s] = 0;
-		queue.add(s);
-		while (!queue.isEmpty()) {
-			Integer u = queue.poll(); // TODO: not priority-like
+		pQueue.add(s);
+		while (!pQueue.isEmpty()) {
+			Integer u = getNext(pQueue, distance);
 			color[u] = Color.BLACK; // 'visited'
 			for (Integer v: graph.outEdges(u)) {
 				int alt = distance[u] + graph.getWeight(u, v);
@@ -119,7 +120,7 @@ public class SequentialGraph {
 					distance[v] = alt;
 					pi[v] = u;
 					if (color[v] != Color.BLACK) {
-						queue.add(v);
+						pQueue.add(v);
 					}
 				}
 			}
@@ -127,6 +128,17 @@ public class SequentialGraph {
 		return pi;
 	}
 
+	Integer getNext(Set<Integer> queue, Integer[] values) {
+		Integer shortest = Integer.MAX_VALUE;
+		for (Integer i: queue) {
+			if (shortest == Integer.MAX_VALUE || values[i] < values[shortest]) {
+				shortest = i;
+			}
+		}
+		queue.remove(shortest);
+		return shortest;
+	}
+	
 	/**
 	 * A* single shortest path algorithm. pi (previous) array has
 	 * been substituted for the 'came_from' map.

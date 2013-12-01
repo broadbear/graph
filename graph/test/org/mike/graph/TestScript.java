@@ -41,14 +41,14 @@ public class TestScript {
 		SequentialGraph dijk = new SequentialGraph(graph);
 		distance = dijk.dijkstrasShortestPath(0);
 		end = System.currentTimeMillis();
-		System.out.println(end - start);
+		System.out.println("dijkstra: "+(end - start));
 		print(distance);		
 		
 		start = System.currentTimeMillis();
 		SequentialGraph aStar = new SequentialGraph(graph);
 		distance = aStar.aStarShortestPath(0, 12);
 		end = System.currentTimeMillis();
-		System.out.println(end - start);
+		System.out.println("a*: "+(end - start));
 		print(distance);		
 	}
 	
