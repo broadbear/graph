@@ -177,7 +177,7 @@ public class SequentialGraph {
 	Integer getLowestFScore(Set<Integer> openSet, Integer[] fScore) {
 		Integer lowest = Integer.MAX_VALUE;
 		for (Integer i: openSet) {
-			if (fScore[i] < fScore[lowest]) {
+			if (lowest == Integer.MAX_VALUE || fScore[i] < fScore[lowest]) {
 				lowest = i;
 			}
 		}
