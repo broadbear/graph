@@ -97,4 +97,29 @@ public class SequentialGraph {
 		}
 		color[u] = Color.BLACK;
 	}
+	
+	Integer[] dijkstrasShortestPath(int s) {
+		for (int u = 0; u < graph.size(); u++) {
+			distance[u] = Integer.MAX_VALUE;
+			color[u] = Color.WHITE;
+			pi[u] = 0;
+		}
+		distance[s] = 0;
+		queue.add(s);
+		while (!queue.isEmpty()) {
+			Integer u = queue.poll(); // TODO: not priority-like
+			color[u] = Color.BLACK; // 'visited'
+			for (Integer v: graph.outEdges(u)) {
+				int alt = distance[u] + graph.getWeight(u, v);
+				if (alt < distance[v]) {
+					distance[v] = alt;
+					pi[v] = u;
+					if (color[v] != Color.BLACK) {
+						queue.add(v);
+					}
+				}
+			}
+		}
+		return pi;
+	}
 }

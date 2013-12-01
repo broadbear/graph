@@ -36,6 +36,13 @@ public class TestScript {
 		end = System.currentTimeMillis();
 		System.out.println(end - start);
 		print(distance);		
+		
+		start = System.currentTimeMillis();
+		SequentialGraph dijk = new SequentialGraph(graph);
+		distance = dijk.dijkstrasShortestPath(0);
+		end = System.currentTimeMillis();
+		System.out.println(end - start);
+		print(distance);		
 	}
 	
 	static void print(Integer[] d) {
