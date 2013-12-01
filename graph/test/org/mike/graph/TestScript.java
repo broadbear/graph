@@ -8,34 +8,34 @@ public class TestScript {
 
 	public static void main(String[] args) {
 //		Graph graph = createGraph();
-		Graph graph = createGraph("input/mediumG.txt");
+		Graph graph = createGraph("input/tinyDG.txt");
 		long start = System.currentTimeMillis();
 		SequentialGraph seqG = new SequentialGraph(graph);
 		Integer[] distance = seqG.mooresShortestPath(0);
 		long end = System.currentTimeMillis();
 		System.out.println(end - start);
-//		print(distance);
+		print(distance);
 
 		start = System.currentTimeMillis();
 		ParallelGraph parG = new ParallelGraph(graph, 4);
 		distance = parG.mooresShortestPath(0);
 		end = System.currentTimeMillis();
 		System.out.println(end - start);
-//		print(distance);
+		print(distance);
 		
 		start = System.currentTimeMillis();
 		SequentialGraph dfs = new SequentialGraph(graph);
 		distance = dfs.bfs(0);
 		end = System.currentTimeMillis();
 		System.out.println(end - start);
-//		print(distance);
+		print(distance);
 		
 		start = System.currentTimeMillis();
 		SequentialGraph bfs = new SequentialGraph(graph);
 		distance = bfs.bfs(0);
 		end = System.currentTimeMillis();
 		System.out.println(end - start);
-//		print(distance);		
+		print(distance);		
 	}
 	
 	static void print(Integer[] d) {
@@ -58,11 +58,11 @@ public class TestScript {
 		Graph g;
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
-			String line = br.readLine();
-			String[] lineSplit = line.split(" ");
-			g = new AdjacencyList(Integer.parseInt(lineSplit[0]));
+			String line = br.readLine(); // # Vertices
+			g = new AdjacencyList(Integer.parseInt(line));
+			br.readLine(); // # Edges
 			while((line = br.readLine()) != null) {
-				lineSplit = line.split(" ");
+				String[] lineSplit = line.split(" ");
 				g.addEdge(Integer.parseInt(lineSplit[0]), Integer.parseInt(lineSplit[1]), 1);
 			}
 		}

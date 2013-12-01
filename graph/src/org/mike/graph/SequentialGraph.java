@@ -91,7 +91,9 @@ public class SequentialGraph {
 	void visit(Integer u) {
 		color[u] = Color.GREY;
 		for (Integer v: graph.outEdges(u)) {
-			visit(v);
+			if (color[v] == Color.WHITE) {
+				visit(v);
+			}
 		}
 		color[u] = Color.BLACK;
 	}
