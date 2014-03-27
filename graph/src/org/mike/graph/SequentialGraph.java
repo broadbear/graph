@@ -1,9 +1,7 @@
 package org.mike.graph;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -54,7 +52,7 @@ public class SequentialGraph {
 		}
 	}
 	
-	Integer[] bfs(int s) {
+	Integer[] breadthFirstSearch(int s) {
 		for (int u = 0; u < graph.size(); u++) {
 			color[u] = Color.WHITE;
 			distance[u] = Integer.MAX_VALUE;
@@ -79,7 +77,7 @@ public class SequentialGraph {
 		return pi;
 	}
 	
-	Integer[] dfs(int s) {
+	Integer[] depthFirstSearch(int s) {
 		for (int u = 0; u < graph.size(); u++) {
 			color[u] = Color.WHITE;
 			distance[u] = Integer.MAX_VALUE;
@@ -96,32 +94,43 @@ public class SequentialGraph {
 		color[u] = Color.GREY;
 		for (Integer v: graph.outEdges(u)) {
 			if (color[v] == Color.WHITE) {
+				distance[v] = distance[u] + 1;
+				pi[v] = u;
 				visit(v);
 			}
 		}
 		color[u] = Color.BLACK;
 	}
 	
+	/**
+	 * A single-source shortest path algorithm. Notice you
+	 * do not need to mark the nodes as they are visited.
+	 * 
+	 * Vertices are all added 
+	 * 
+	 * O(|V|^2)
+	 * 
+	 * @param s
+	 * @return
+	 */
 	Integer[] dijkstrasShortestPath(int s) {
 		Set<Integer> pQueue = new HashSet<Integer>();
 		for (int u = 0; u < graph.size(); u++) {
 			distance[u] = Integer.MAX_VALUE;
-			color[u] = Color.WHITE;
 			pi[u] = 0;
+			pQueue.add(u);
 		}
 		distance[s] = 0;
-		pQueue.add(s);
 		while (!pQueue.isEmpty()) {
 			Integer u = getNext(pQueue, distance);
-			color[u] = Color.BLACK; // 'visited'
+			if (distance[u] == Integer.MAX_VALUE) {
+				break;
+			}
 			for (Integer v: graph.outEdges(u)) {
 				int alt = distance[u] + graph.getWeight(u, v);
 				if (alt < distance[v]) {
 					distance[v] = alt;
 					pi[v] = u;
-					if (color[v] != Color.BLACK) {
-						pQueue.add(v);
-					}
 				}
 			}
 		}
@@ -137,6 +146,61 @@ public class SequentialGraph {
 		}
 		queue.remove(shortest);
 		return shortest;
+	}
+
+	/**
+	 * O(|V| * |E|)
+	 * 
+	 * @param s
+	 * @return
+	 */
+	Integer[] bellmanFordShortestPath(int s) {
+		for (int u = 0; u < graph.size(); u++) {
+			distance[u] = Integer.MAX_VALUE;
+			pi[u] = 0;
+		}
+		distance[s] = 0;
+		for (int i = 0; i < graph.size() - 1; i++) {
+			// Iterate all edges
+			for (int u = 0; u < graph.size(); u++) {
+				for (Integer v: graph.outEdges(u)) {
+					long alt = (long)distance[u] + (long)graph.getWeight(u, v);
+					if (alt < distance[v]) {
+						distance[v] = (int)alt;
+						pi[v] = u;
+					}
+				}
+			}
+		}
+		return distance;	
+	}
+	
+	/**
+	 * O([V]^3)
+	 * 
+	 * @return
+	 */
+	int[][] floydWarshallAllPairsShortestPath() {
+		int[][] distance = new int[graph.size()][graph.size()];
+		for (int i = 0; i < graph.size(); i++ ) {
+			distance[i][i] = 0;
+		}
+		// Record the edge weights
+ 		for (int u = 0; u < graph.size(); u++) {
+			for (Integer v: graph.outEdges(u)) {
+				distance[u][v] = graph.getWeight(u, v);
+			}
+		}
+		for (int k = 0; k < graph.size(); k++) {
+			for (int i = 0; i < graph.size(); i++) {
+				for (int j = 0; j < graph.size(); j++) {
+					if (distance[i][j] > distance[i][k] + distance[k][j]) {
+						distance[i][j] = distance[i][k] + distance[k][j];
+					}
+				}
+			}
+		}
+		return distance;
 	}
 	
 	/**
