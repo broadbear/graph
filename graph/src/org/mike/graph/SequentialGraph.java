@@ -2,6 +2,7 @@ package org.mike.graph;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
@@ -131,6 +132,7 @@ public class SequentialGraph {
 				if (alt < distance[v]) {
 					distance[v] = alt;
 					pi[v] = u;
+					pQueue.add(v);
 				}
 			}
 		}
