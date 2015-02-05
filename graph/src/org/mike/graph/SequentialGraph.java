@@ -1,5 +1,6 @@
 package org.mike.graph;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -53,6 +54,22 @@ public class SequentialGraph {
 		}
 	}
 	
+	/**
+	 * Breadth first search (bfs)
+	 * 
+	 * Distance in this implementation is calculated in terms
+	 * of edge count. This implementation also does not take into
+	 * account unconnected components.
+	 * 
+	 * BFS is a SEARCH algorithm that works without backtracking.
+	 * BFS IS a SHORTEST PATH algorithm in terms of edge count.
+	 * Works with directed and undirected graphs.
+	 * 
+	 * O(V + E)
+	 * 
+	 * @param s
+	 * @return
+	 */
 	Integer[] breadthFirstSearch(int s) {
 		for (int u = 0; u < graph.size(); u++) {
 			color[u] = Color.WHITE;
@@ -78,6 +95,24 @@ public class SequentialGraph {
 		return pi;
 	}
 	
+	/**
+	 * Depth first search (dfs)
+	 * 
+	 * Distance in this implementation is calculated in terms
+	 * of edge count. This implementation also does not take into
+	 * account unconnected components.
+	 * 
+	 * DFS is a SEARCH algorithm that utilizes backtracking.
+	 * DFS is NOT a SHORTEST PATH algorithm (in terms of edge count).
+	 * Works with directed and undirected graphs.
+	 * Good for topo sorts, strongly connected components,
+	 * and detecting weakspots in networks.
+	 * 
+	 * O(V + E)
+	 * 
+	 * @param s
+	 * @return
+	 */
 	Integer[] depthFirstSearch(int s) {
 		for (int u = 0; u < graph.size(); u++) {
 			color[u] = Color.WHITE;
@@ -104,10 +139,17 @@ public class SequentialGraph {
 	}
 	
 	/**
-	 * A single-source shortest path algorithm. Notice you
+	 * Dijkstra's single-source shortest path algorithm.
+	 * 
+	 * A single-source SHORTEST PATH algorithm. Notice you
 	 * do not need to mark the nodes as they are visited.
 	 * 
-	 * Vertices are all added 
+	 * This implementation uses a very naiive priority
+	 * queue implemenation with terrible runtime as
+	 * using Java's native PriorityQueue did not lead
+	 * to a much more elegant or performant solution.
+	 * 
+	 * Works with directed, positively weighted graphs.
 	 * 
 	 * O(|V|^2)
 	 * 
@@ -115,7 +157,7 @@ public class SequentialGraph {
 	 * @return
 	 */
 	Integer[] dijkstrasShortestPath(int s) {
-		Set<Integer> pQueue = new HashSet<Integer>();
+		Queue<Integer> pQueue = new LinkedList<>();
 		for (int u = 0; u < graph.size(); u++) {
 			distance[u] = Integer.MAX_VALUE;
 			pi[u] = 0;
@@ -123,34 +165,52 @@ public class SequentialGraph {
 		}
 		distance[s] = 0;
 		while (!pQueue.isEmpty()) {
-			Integer u = getNext(pQueue, distance);
+			Integer u = getMin(pQueue);
 			if (distance[u] == Integer.MAX_VALUE) {
 				break;
 			}
 			for (Integer v: graph.outEdges(u)) {
-				int alt = distance[u] + graph.getWeight(u, v);
+				int w = graph.getWeight(u, v);
+				int alt = distance[u] + w;
 				if (alt < distance[v]) {
 					distance[v] = alt;
 					pi[v] = u;
-					pQueue.add(v);
 				}
 			}
 		}
 		return pi;
-	}
+	}	
 
-	Integer getNext(Set<Integer> queue, Integer[] values) {
-		Integer shortest = Integer.MAX_VALUE;
-		for (Integer i: queue) {
-			if (shortest == Integer.MAX_VALUE || values[i] < values[shortest]) {
-				shortest = i;
+	/**
+	 * A very naiive implementation of getMin as using a Java PriorityQueue
+	 * does not perform much better.
+	 * 
+	 * @param pQueue
+	 * @return
+	 */
+	int getMin(Queue<Integer> pQueue) {
+		int min = Integer.MAX_VALUE;
+		int nextV = -1;
+		for (Integer i: pQueue) {
+			if (distance[i] <= min) {
+				min = distance[i];
+				nextV = i;
 			}
 		}
-		queue.remove(shortest);
-		return shortest;
+		pQueue.remove(nextV);
+		return nextV;
 	}
 
 	/**
+	 * Bellman-Ford single source shortest path.
+	 * 
+	 * Works with directed, weighted graphs.
+	 * 
+	 * Graph can have negative weights, but no
+	 * negative cycles.
+	 * 
+	 * Not best for dense graphs.
+	 * 
 	 * O(|V| * |E|)
 	 * 
 	 * @param s
@@ -178,6 +238,10 @@ public class SequentialGraph {
 	}
 	
 	/**
+	 * Floyd-Warshall all-pairs shortest path.
+	 * 
+	 * Works with directed, positively weighted graphs.
+	 * 
 	 * O([V]^3)
 	 * 
 	 * @return
