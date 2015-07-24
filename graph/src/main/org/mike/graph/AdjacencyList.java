@@ -10,7 +10,7 @@ public class AdjacencyList implements Graph {
 	AdjacencyList(int n) {
 		vertexList = new ArrayList<Vertex>();
 		for (int i = 0; i < n; i++) {
-			vertexList.add(new Vertex());
+			vertexList.add(new Vertex(n));
 		}
 	}
 	
@@ -35,11 +35,11 @@ public class AdjacencyList implements Graph {
 	}
 	
 	@Override
-	public List<Integer> outEdges(int i) { //TODO: maybe vertex should contain an 'index' value
+	public List<Integer> outEdges(int i) {
 		Vertex v = vertexList.get(i);
 		List<Integer> outEdges = new ArrayList<Integer>();
 		for (Edge uv: v.outEdges()) {
-			outEdges.add(vertexList.indexOf(uv.out));
+			outEdges.add(uv.out.getIndex());
 		}
 		return outEdges;
 	}
@@ -51,7 +51,17 @@ public class AdjacencyList implements Graph {
 	
 	@Override
 	public List<Integer> inEdges(int i) {
-		return null;
+		Vertex v = vertexList.get(i);
+		List<Integer> inEdges = new ArrayList<Integer>();
+		for (int n = 0; n < vertexList.size(); n++) {
+			Vertex u = vertexList.get(n);
+			for (Edge uv: u.outEdges()) {
+				if (uv.out == v) {
+					inEdges.add(uv.out.getIndex());
+				}
+			}
+		}
+		return inEdges;
 	}
 
 	@Override
@@ -72,6 +82,7 @@ public class AdjacencyList implements Graph {
 	}
 	
 	static class Vertex {
+		int index;
 		enum Color {
 			RED,
 			BLACK
@@ -79,6 +90,12 @@ public class AdjacencyList implements Graph {
 		Color color;
 		int distance;
 		List<Edge> edgeList = new ArrayList<Edge>();
+		Vertex(int index) {
+			this.index = index;
+		}
+		int getIndex() {
+			return index;
+		}
 		List<Edge> outEdges() {
 			return edgeList;
 		}

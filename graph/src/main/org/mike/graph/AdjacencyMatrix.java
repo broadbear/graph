@@ -42,9 +42,13 @@ public class AdjacencyMatrix implements Graph {
 	}
 
 	@Override
-	public List<Integer> inEdges(int i) {
+	public List<Integer> inEdges(int j) {
 		List<Integer> edges = new ArrayList<Integer>();
-		// TODO: tbd
+		for (int i = 0; i < matrix.length; i++) {
+			if (matrix[i][j] > 0) {
+				edges.add(i);
+			}
+		}
 		return edges;
 	}
 
