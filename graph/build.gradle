@@ -1,0 +1,31 @@
+
+version = '1.0.0'
+
+apply plugin: 'java'
+
+repositories {
+	mavenCentral();
+}
+
+dependencies {
+	testCompile 'junit:junit:4.12'
+}
+
+task wrapper(type: Wrapper) {
+//	gradleVersion = '2.0'
+}
+
+jar {
+	manifest {
+		attributes("Implementation-Title": "Gradle",
+					"Implementation-Version": version)
+	}
+}
+
+uploadArchives {
+	repositories {
+		flatDir {
+			dirs 'C:/Users/broadbear/local_repo'
+		}
+	}
+}

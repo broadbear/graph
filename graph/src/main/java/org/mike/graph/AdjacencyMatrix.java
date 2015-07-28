@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdjacencyMatrix implements Graph {
-	Integer[][] matrix;
+	int[][] matrix;
 
 	AdjacencyMatrix(int n) {
-		matrix = new Integer[n][n];
+		matrix = new int[n][n];
 	}
 	
 	@Override
