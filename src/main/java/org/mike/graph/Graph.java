@@ -10,4 +10,5 @@ public interface Graph {
 	List<Integer> outEdges(int i);
 	List<Integer> inEdges(int i);
 	int getWeight(int i, int j);
+	void clear();
 }

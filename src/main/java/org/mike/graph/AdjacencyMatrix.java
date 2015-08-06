@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdjacencyMatrix implements Graph {
+	int size;
 	int[][] matrix;
 
 	AdjacencyMatrix(int n) {
-		matrix = new int[n][n];
+		size = n;
+		init();
+	}
+	
+	void init() {
+		matrix = new int[size][size];
 	}
 	
 	@Override
@@ -55,5 +61,10 @@ public class AdjacencyMatrix implements Graph {
 	@Override
 	public int getWeight(int i, int j) {
 		return matrix[i][j];
+	}
+		
+	@Override
+	public void clear() {
+		init();
 	}
 }

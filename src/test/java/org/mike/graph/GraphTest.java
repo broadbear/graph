@@ -5,13 +5,28 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-public class AdjacencyMatrixTest {
+@RunWith(Parameterized.class)
+public class GraphTest {
 	Graph g;
 	
+	@Parameters
+	public static Graph[] instances() {
+		Graph[] gArray = {new AdjacencyList(10), new AdjacencyMatrix(10)};
+		return gArray;
+	}
+	
+	public GraphTest(Graph g) {
+		this.g = g;
+	}
+	
 	@Before
-	public void before() {
-		g = new AdjacencyMatrix(10);
+	public void before() 
+			throws InstantiationException, IllegalAccessException {
+		g.clear();
 	}
 	
 	@Test
@@ -36,6 +51,29 @@ public class AdjacencyMatrixTest {
 		assertEquals(2, g.outEdges(0).size());
 		assertEquals(0, g.outEdges(1).size());
 		assertEquals(0, g.outEdges(2).size());
+	}
+
+	@Test
+	public void testOutEdges() {
+		g.addEdge(0, 1, 1);
+		g.addEdge(0, 2, 2);
+		g.addEdge(0, 3, 3);
+		g.addEdge(0, 4, 4);
+		g.addEdge(0, 5, 5);
+		g.addEdge(0, 6, 6);
+		assertEquals(6, g.outEdges(0).size());
+	}
+
+
+	@Test
+	public void testInEdges() {
+		g.addEdge(1, 0, 1);
+		g.addEdge(2, 0, 2);
+		g.addEdge(3, 0, 3);
+		g.addEdge(4, 0, 4);
+		g.addEdge(5, 0, 5);
+		g.addEdge(6, 0, 6);
+		assertEquals(6, g.inEdges(0).size());
 	}
 
 	public void assertEdge(int i, int j, int w) {

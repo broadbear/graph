@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdjacencyList implements Graph {
-
+	int size;
 	List<Vertex> vertexList;
 	
 	AdjacencyList(int n) {
+		size = n;
+		init();
+	}
+	
+	void init() {
 		vertexList = new ArrayList<Vertex>();
-		for (int i = 0; i < n; i++) {
-			vertexList.add(new Vertex(n));
+		for (int i = 0; i < size; i++) {
+			vertexList.add(new Vertex(size));
 		}
 	}
 	
@@ -79,6 +84,11 @@ public class AdjacencyList implements Graph {
 			}
 		}
 		return 0;
+	}
+	
+	@Override
+	public void clear() {
+		init();
 	}
 	
 	static class Vertex {
