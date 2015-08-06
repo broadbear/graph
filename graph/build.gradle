@@ -1,7 +1,8 @@
 
-version = '1.0.0'
-
 apply plugin: 'java'
+
+version = '1.0.0'
+group = 'org.mike'
 
 repositories {
 	mavenCentral();
