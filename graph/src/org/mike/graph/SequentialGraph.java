@@ -104,7 +104,7 @@ public class SequentialGraph {
 	 * DFS is NOT a SHORTEST PATH algorithm (in terms of edge count).
 	 * Works with directed and undirected graphs.
 	 * Good for topo sorts, strongly connected components,
-	 * and detecting weakspots in networks.
+	 * and detecting weak spots in networks.
 	 * 
 	 * O(V + E)
 	 * 
@@ -142,8 +142,8 @@ public class SequentialGraph {
 	 * A single-source SHORTEST PATH algorithm. Notice you
 	 * do not need to mark the nodes as they are visited.
 	 * 
-	 * This implementation uses a very naiive priority
-	 * queue implemenation with terrible runtime as
+	 * This implementation uses a very naive priority
+	 * queue implementation with terrible runtime as
 	 * using Java's native PriorityQueue did not lead
 	 * to a much more elegant or performant solution.
 	 * 
