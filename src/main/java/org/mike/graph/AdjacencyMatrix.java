@@ -6,6 +6,7 @@ import java.util.List;
 public class AdjacencyMatrix implements Graph {
 	int size;
 	int[][] matrix;
+	// TODO: need directed/undirected
 
 	AdjacencyMatrix(int n) {
 		size = n;
@@ -46,6 +47,18 @@ public class AdjacencyMatrix implements Graph {
 		}
 		return edges;
 	}
+
+    @Override
+    public List<EdgeNode> outEdges2(int i) {
+        List<EdgeNode> edges = new ArrayList<>();
+        for (int j = 0; j < matrix.length; j++) {
+            if (matrix[i][j] > 0) {
+                EdgeNode p = new EdgeNode(j, matrix[i][j]);
+                edges.add(p);
+            }
+        }
+        return edges;
+    }
 
 	@Override
 	public List<Integer> inEdges(int j) {

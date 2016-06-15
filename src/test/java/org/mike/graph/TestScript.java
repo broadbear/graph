@@ -45,7 +45,7 @@ public class TestScript {
 	}
 
 	static Graph createGraph() {
-		Graph graph = new AdjacencyList(5);
+		Graph graph = new AdjacencyList(5, true);
 		graph.addEdge(0, 1, 4);
 		graph.addEdge(0, 2, 1);
 		graph.addEdge(1, 3, 3);
@@ -60,7 +60,7 @@ public class TestScript {
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			String line = br.readLine();
 			String[] lineSplit = line.split(" ");
-			g = new AdjacencyList(Integer.parseInt(lineSplit[0]));
+			g = new AdjacencyList(Integer.parseInt(lineSplit[0]), true);
 			while((line = br.readLine()) != null) {
 				lineSplit = line.split(" ");
 				g.addEdge(Integer.parseInt(lineSplit[0]), Integer.parseInt(lineSplit[1]), 1);

@@ -15,7 +15,7 @@ public class GraphTest {
 	
 	@Parameters
 	public static Graph[] instances() {
-		Graph[] gArray = {new AdjacencyList(10), new AdjacencyMatrix(10)};
+		Graph[] gArray = {new AdjacencyList(10, true), new AdjacencyMatrix(10)};
 		return gArray;
 	}
 	
